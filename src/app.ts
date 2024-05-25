@@ -7,11 +7,11 @@ app.use(express.json());
 app.use(cors());
 
 // application route
-app.use("/api/v1/students", studentRoutes)
+app.use('/api/v1/students', studentRoutes);
 
 const getAControlar = (req: Request, res: Response) => {
   res.send('hello world');
-}
+};
 
 app.get('/', getAControlar);
 
