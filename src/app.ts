@@ -1,9 +1,13 @@
 import express, { Application, Request, Response } from 'express';
 const app: Application = express();
 import cors from 'cors';
+import { studentRoutes } from './app/modules/Student/Student.route';
 // parser
 app.use(express.json());
-app.use(cors);
+app.use(cors());
+
+// application route
+app.use("/api/v1/students", studentRoutes)
 
 const getAControlar = (req: Request, res: Response) => {
   res.send('hello world');
