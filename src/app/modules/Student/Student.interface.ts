@@ -1,23 +1,4 @@
 import { Schema, model, connect } from 'mongoose';
-export type Guardian = {
-    fatherName: string;
-    fatherOccuption: string;
-    fatherContactNumber: number;
-    motherName: string;
-    motherOccupation: string;
-    montherNumber: number
-}
-export type userName = {
-    firstName: string;
-    middleName: string;
-    lastName: string;
-}
-export type LocalGuardina = {
-    name: string;
-    occupation: string;
-    contactNumber: string;
-    address: string
-}
 export type student = {
     id: string;
     name: userName;
@@ -33,4 +14,23 @@ export type student = {
     localGuardian: LocalGuardina;
     profileImage?: string;
     isActive: "active" | "blocked";
+}
+export type Guardian = {
+    fatherName: string;
+    fatherOccuption: string;
+    fatherContactNumber: string;
+    motherName: string;
+    motherOccupation: string;
+    montherNumber: string
+}
+export type userName = {
+    firstName: string;
+    middleName: string;
+    lastName: string;
+}
+export type LocalGuardina = {
+    name: string;
+    occupation: string;
+    contactNumber: string;
+    address: string
 }

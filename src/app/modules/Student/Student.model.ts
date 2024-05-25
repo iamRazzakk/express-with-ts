@@ -1,44 +1,20 @@
 import { Schema, model, connect } from 'mongoose';
-import { student } from './Student.interface';
-const studentSchema = new Schema<student>({
-    id: { type: String },
-    name: {
-        firstName: {
-            type: String,
-            required: true,
-        },
-        middleName: {
-            type: String,
-        },
-        lastName: {
-            type: String,
-            required: true,
-        }
-    },
-    gender: ["male", "female"],
-    email: {
+import { Guardian, LocalGuardina, student, userName } from './Student.interface';
+const userNameSchema = new Schema<userName>({
+    firstName: {
         type: String,
-        required: true
+        required: true,
     },
-    dateOfBirth: { type: String },
-    contactNumber: {
+    middleName: {
         type: String,
-        required: true
     },
-    emergencyContactNumber: {
+    lastName: {
         type: String,
-        required: true
-    },
-    BloodGroup: ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"],
-    presentAdress: {
-        type: String,
-        required: true
-    },
-    parmanentAdress: {
-        type: String,
-        required: true
-    },
-    guardian: {
+        required: true,
+    }
+})
+const gardianSchema = new Schema<Guardian>(
+    {
         fatherName: {
             type: String,
             required: true
@@ -63,8 +39,10 @@ const studentSchema = new Schema<student>({
             type: String,
             required: true
         },
-    },
-    localGuardian: {
+    }
+)
+const localGuardianSchema = new Schema<LocalGuardina>(
+    {
         name: {
             type: String,
             required: true
@@ -81,7 +59,39 @@ const studentSchema = new Schema<student>({
             type: String,
             required: true
         },
+    }
+)
+
+const studentSchema = new Schema<student>({
+    id: { type: String },
+    name: userNameSchema,
+    gender: ["male", "female"],
+    email: {
+        type: String,
+        required: true
     },
+    dateOfBirth: { type: String },
+    contactNumber: {
+        type: String,
+        required: true
+    },
+    emergencyContactNumber: {
+        type: String,
+        required: true
+    },
+    BloodGroup: ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"],
+    presentAdress: {
+        type: String,
+        required: true
+    },
+    parmanentAdress: {
+        type: String,
+        required: true
+    },
+    guardian: gardianSchema,
+    localGuardian: localGuardianSchema,
     profileImage: { type: String },
     isActive: ["active", "blocked"]
 })
+// create model
+const studentModel = model<student>("studentModel", studentSchema)
