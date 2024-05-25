@@ -9,7 +9,7 @@ export type Guardian = {
 }
 export type userName = {
     firstName: string;
-    moddleName: string;
+    middleName: string;
     lastName: string;
 }
 export type LocalGuardina = {
@@ -25,12 +25,12 @@ export type student = {
     email: string;
     dateOfBirth: string;
     contactNumber: string;
-    emergencyContactNumber: number;
+    emergencyContactNumber: string;
     BloodGroup: "A+" | "A-" | "B+" | "B-" | "AB+" | "AB-" | "O+" | "O-";
     presentAdress: string;
     parmanentAdress: string;
     guardian: Guardian;
     localGuardian: LocalGuardina;
     profileImage?: string;
-    isActive: "active" | "inActive";
+    isActive: "active" | "blocked";
 }
