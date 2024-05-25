@@ -30,7 +30,11 @@ const getStudent = async (req: Request, res: Response) => {
       data: result,
     });
   } catch (error) {
-    console.log(error);
+    res.status(400).json({
+      success: false,
+      message: 'Something is wrong',
+      eroor: error,
+    });
   }
 };
 const getStudentOne = async (req: Request, res: Response) => {
@@ -43,7 +47,11 @@ const getStudentOne = async (req: Request, res: Response) => {
       data: result,
     });
   } catch (error) {
-    console.log(error);
+    res.status(400).json({
+      success: false,
+      message: 'Something is wrong',
+      eroor: error,
+    });
   }
 };
 export const studentControllar = {

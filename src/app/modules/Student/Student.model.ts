@@ -1,6 +1,7 @@
 // create model
 
 import { Schema, model } from 'mongoose';
+import validator from 'validator';
 import {
     Guardian,
     LocalGuardina,
@@ -10,7 +11,17 @@ import {
 const userNameSchema = new Schema<userName>({
     firstName: {
         type: String,
-        required: true,
+        trim: true,
+        required: [true, "First name required"],
+        maxlength: 20,
+        validate: {
+            validator: function (value: string) {
+                // console.log(value)charAt(0).toUpperCase() + string.slice(1);
+                const firstNameStr = value.charAt(0).toUpperCase() + value.slice(1)
+                return firstNameStr === value
+            },
+            message: "{VALUE} is not capitalize formet"
+        }
     },
     middleName: {
         type: String,
@@ -18,8 +29,12 @@ const userNameSchema = new Schema<userName>({
     lastName: {
         type: String,
         required: true,
+        validate: (value: string) => {
+            validator: validator.isAlpha(value)
+            // onmessage: "{VALUE} is not valid";
+        }
     },
-});
+})
 const gardianSchema = new Schema<Guardian>({
     fatherName: {
         type: String,
@@ -69,7 +84,7 @@ const studentSchema = new Schema<student>({
     id: { type: String, required: true, unique: true },
     name: {
         type: userNameSchema,
-        required: true
+        required: true,
     },
     gender: {
         type: String,
@@ -79,7 +94,13 @@ const studentSchema = new Schema<student>({
     email: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
+        validate: {
+            validator: (value: string) => {
+                validator.isEmail(value)
+            },
+            message: "{VALUE} is not email type"
+        }
     },
     dateOfBirth: { type: String },
     contactNumber: {
