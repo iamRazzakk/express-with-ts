@@ -1,6 +1,6 @@
 // create model 
 
-import { Schema, model, connect } from 'mongoose';
+import { Schema, model } from 'mongoose';
 import { Guardian, LocalGuardina, student, userName } from './Student.interface';
 const userNameSchema = new Schema<userName>({
     firstName: {

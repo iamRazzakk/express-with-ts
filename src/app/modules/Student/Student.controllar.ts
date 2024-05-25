@@ -33,6 +33,19 @@ const getStudent = async (req: Request, res: Response) => {
         console.log(error)
     }
 }
+const getStudentOne = async (req: Request, res: Response) => {
+    try {
+        const { studentID } = req.params;
+        const result = await StudentService.getOneStudent(studentID)
+        res.status(200).json({
+            success: true,
+            message: "Student is retrived successfully",
+            data: result
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}
 export const studentControllar = {
-    createStudent, getStudent
+    createStudent, getStudent, getStudentOne
 }
