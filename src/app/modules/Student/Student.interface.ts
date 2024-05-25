@@ -1,4 +1,6 @@
-import { Schema, model, connect } from 'mongoose';
+// import { Schema, model, connect } from 'mongoose';
+
+// create interface or type
 export type student = {
     id: string;
     name: userName;

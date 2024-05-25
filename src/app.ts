@@ -5,9 +5,12 @@ import cors from 'cors';
 app.use(express.json());
 app.use(cors);
 
-app.get('/', (req: Request, res: Response) => {
+const getAControlar = (req: Request, res: Response) => {
   res.send('hello world');
-});
+}
+
+app.get('/', getAControlar);
+
 console.log(process.cwd());
 
 export default app;

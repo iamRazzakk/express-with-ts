@@ -1,3 +1,5 @@
+// create model 
+
 import { Schema, model, connect } from 'mongoose';
 import { Guardian, LocalGuardina, student, userName } from './Student.interface';
 const userNameSchema = new Schema<userName>({
@@ -94,4 +96,4 @@ const studentSchema = new Schema<student>({
     isActive: ["active", "blocked"]
 })
 // create model
-const studentModel = model<student>("studentModel", studentSchema)
+export const studentModel = model<student>("studentModel", studentSchema)
