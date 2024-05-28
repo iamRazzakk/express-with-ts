@@ -22,7 +22,8 @@ const userSchema = new Schema<TUser>({
     status: {
         type: String,
         enum: ["in-progress", "blocked"],
-        require: true
+        require: true,
+        default: "in-progress"
     },
     isDeleted: {
         type: Boolean,
