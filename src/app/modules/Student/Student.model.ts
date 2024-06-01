@@ -82,6 +82,12 @@ const localGuardianSchema = new Schema<LocalGuardina>({
 
 const studentSchema = new Schema<student>({
     id: { type: String, required: true, unique: true },
+    user: {
+        type: Schema.Types.ObjectId,
+        required: [true, "User Id is requird"],
+        unique: true,
+        ref: "User"
+    },
     name: {
         type: userNameSchema,
         required: true,
@@ -133,11 +139,11 @@ const studentSchema = new Schema<student>({
         required: true
     },
     profileImage: { type: String },
-    isActive: {
-        type: String,
-        enum: ['active', 'blocked'],
-        default: "active"
-    },
+    // isActive: {
+    //     type: String,
+    //     enum: ['active', 'blocked'],
+    //     default: "active"
+    // },
 });
 // create model
 export const studentModel = model<student>('studentModel', studentSchema);

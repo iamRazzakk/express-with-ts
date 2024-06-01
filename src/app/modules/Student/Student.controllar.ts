@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { StudentService } from './Student.service';
 
 // const createStudent = async (req: Request, res: Response) => {
@@ -21,7 +21,7 @@ import { StudentService } from './Student.service';
 //     });
 //   }
 // };
-const getStudent = async (req: Request, res: Response) => {
+const getStudent = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const result = await StudentService.getAllStudent();
     res.status(200).json({
@@ -30,14 +30,15 @@ const getStudent = async (req: Request, res: Response) => {
       data: result,
     });
   } catch (error) {
-    res.status(400).json({
-      success: false,
-      message: 'Something is wrong',
-      eroor: error,
-    });
+    // res.status(400).json({
+    //   success: false,
+    //   message: 'Something is wrong',
+    //   eroor: error,
+    // });
+    next()
   }
 };
-const getStudentOne = async (req: Request, res: Response) => {
+const getStudentOne = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { studentID } = req.params;
     const result = await StudentService.getOneStudent(studentID);
@@ -47,11 +48,12 @@ const getStudentOne = async (req: Request, res: Response) => {
       data: result,
     });
   } catch (error) {
-    res.status(400).json({
-      success: false,
-      message: 'Something is wrong',
-      eroor: error,
-    });
+    // res.status(400).json({
+    //   success: false,
+    //   message: 'Something is wrong',
+    //   eroor: error,
+    // });
+    next(error)
   }
 };
 export const studentControllar = {

@@ -1,8 +1,11 @@
 // import { Schema, model, connect } from 'mongoose';
 
+import { Types } from "mongoose";
+
 // create interface or type
 export type student = {
   id: string;
+  user: Types.ObjectId;
   name: userName;
   gender: 'male' | 'female';
   email: string;
@@ -15,7 +18,7 @@ export type student = {
   guardian: Guardian;
   localGuardian: LocalGuardina;
   profileImage?: string;
-  isActive: 'active' | 'blocked';
+  // isActive: 'active' | 'blocked';
 };
 export type Guardian = {
   fatherName: string;

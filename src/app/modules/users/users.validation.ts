@@ -5,6 +5,6 @@ const userValidationSchema = z.object({
     // status: z.enum(["in-progress", "blocked"]).default("in-progress"),
     // isDeleted: z.boolean().optional().default(false)
 })
-export const userZodSchema = {
+export const userValidation = {
     userValidationSchema
 }
