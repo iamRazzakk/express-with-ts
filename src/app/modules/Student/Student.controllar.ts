@@ -1,40 +1,17 @@
 import { NextFunction, Request, Response } from 'express';
 import { StudentService } from './Student.service';
-
-// const createStudent = async (req: Request, res: Response) => {
-//   try {
-//     console.log('Received data:', req.body);
-//     const { student: studentData } = req.body;
-//     // we call service function to send this data
-//     const result = await StudentService.createStudentIntoDB(studentData);
-//     // send response
-//     res.status(200).json({
-//       success: true,
-//       message: 'Student is created successfully',
-//       data: result,
-//     });
-//   } catch (error) {
-//     console.log(error);
-//     res.status(500).json({
-//       success: false,
-//       message: 'Failed to create student',
-//     });
-//   }
-// };
+import sendResponse from '../../utils/sendResponse';
+import httpStatus from 'http-status';
 const getStudent = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const result = await StudentService.getAllStudent();
-    res.status(200).json({
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
       success: true,
-      message: 'Student is retrived successfully',
+      message: "user create successfully",
       data: result,
-    });
+    })
   } catch (error) {
-    // res.status(400).json({
-    //   success: false,
-    //   message: 'Something is wrong',
-    //   eroor: error,
-    // });
     next()
   }
 };
