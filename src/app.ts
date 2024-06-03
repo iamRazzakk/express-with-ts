@@ -1,4 +1,4 @@
-import express, { Application, Request, Response, } from 'express';
+import express, { Application, Request, RequestHandler, Response, } from 'express';
 const app: Application = express();
 import cors from 'cors';
 import globalErrorHandelar from './app/modules/middlewares/globalErrorHandelar';
@@ -11,7 +11,7 @@ app.use(cors());
 // application route
 app.use('/api/v1', router);
 
-const test = (req: Request, res: Response) => {
+const test: RequestHandler = (req, res) => {
   res.send('hello world');
 };
 

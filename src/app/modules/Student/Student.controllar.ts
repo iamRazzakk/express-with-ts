@@ -1,21 +1,28 @@
-import { NextFunction, Request, Response } from 'express';
+import { NextFunction, Request, RequestHandler, Response } from 'express';
 import { StudentService } from './Student.service';
 import sendResponse from '../../utils/sendResponse';
 import httpStatus from 'http-status';
-const getStudent = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const result = await StudentService.getAllStudent();
-    sendResponse(res, {
-      statusCode: httpStatus.OK,
-      success: true,
-      message: "user create successfully",
-      data: result,
-    })
-  } catch (error) {
-    next()
+import { promise } from 'zod';
+
+
+const catchAsync = (fn: RequestHandler) => {
+  console.log(fn)
+  return (req: Request, res: Response, next: NextFunction) => {
+    Promise.resolve(fn(req, res, next)).catch(error => next(error));
   }
-};
-const getStudentOne = async (req: Request, res: Response, next: NextFunction) => {
+}
+
+const getStudent: RequestHandler = catchAsync(async (req, res, next) => {
+
+  const result = await StudentService.getAllStudent();
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "user create successfully",
+    data: result,
+  })
+});
+const getStudentOne: RequestHandler = async (req, res, next) => {
   try {
     const { studentID } = req.params;
     const result = await StudentService.getOneStudent(studentID);
@@ -25,16 +32,10 @@ const getStudentOne = async (req: Request, res: Response, next: NextFunction) =>
       data: result,
     });
   } catch (error) {
-    // res.status(400).json({
-    //   success: false,
-    //   message: 'Something is wrong',
-    //   eroor: error,
-    // });
     next(error)
   }
 };
 export const studentControllar = {
-  // createStudent,
   getStudent,
   getStudentOne,
 };
