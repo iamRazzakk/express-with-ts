@@ -3,16 +3,10 @@ import { StudentService } from './Student.service';
 import sendResponse from '../../utils/sendResponse';
 import httpStatus from 'http-status';
 import { promise } from 'zod';
+import catchAsync from '../../utils/catchAsync';
 
 
-const catchAsync = (fn: RequestHandler) => {
-  console.log(fn)
-  return (req: Request, res: Response, next: NextFunction) => {
-    Promise.resolve(fn(req, res, next)).catch(error => next(error));
-  }
-}
-
-const getStudent: RequestHandler = catchAsync(async (req, res, next) => {
+const getStudent = catchAsync(async (req, res) => {
 
   const result = await StudentService.getAllStudent();
   sendResponse(res, {
@@ -22,19 +16,15 @@ const getStudent: RequestHandler = catchAsync(async (req, res, next) => {
     data: result,
   })
 });
-const getStudentOne: RequestHandler = async (req, res, next) => {
-  try {
-    const { studentID } = req.params;
-    const result = await StudentService.getOneStudent(studentID);
-    res.status(200).json({
-      success: true,
-      message: 'Student is retrived successfully',
-      data: result,
-    });
-  } catch (error) {
-    next(error)
-  }
-};
+const getStudentOne: RequestHandler = catchAsync(async (req, res, next) => {
+  const { studentID } = req.params;
+  const result = await StudentService.getOneStudent(studentID);
+  res.status(200).json({
+    success: true,
+    message: 'Student is retrived successfully',
+    data: result,
+  });
+});
 export const studentControllar = {
   getStudent,
   getStudentOne,

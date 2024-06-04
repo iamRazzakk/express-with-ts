@@ -3,13 +3,13 @@ const app: Application = express();
 import cors from 'cors';
 import globalErrorHandelar from './app/modules/middlewares/globalErrorHandelar';
 import notFound from './app/modules/middlewares/notFound';
-import router from './app/router';
+import mainRouter from './app/router';
 // parser
 app.use(express.json());
 app.use(cors());
 
 // application route
-app.use('/api/v1', router);
+app.use('/api/v1', mainRouter);
 
 const test: RequestHandler = (req, res) => {
   res.send('hello world');

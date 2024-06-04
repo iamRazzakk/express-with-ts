@@ -1,8 +1,7 @@
 import { Router } from "express";
 import { studentRoutes } from "../modules/Student/Student.route";
 import { userRouter } from "../modules/users/users.route";
-
-const router = Router()
+const mainRouter = Router()
 const modiulRouter = [
     {
         path: "/users",
@@ -14,6 +13,7 @@ const modiulRouter = [
     },
 ]
 
-modiulRouter.forEach(router => (router.path, router.router))
+modiulRouter.forEach(router => mainRouter.use(router.path, router.router))
+// (router.path, router.router)
 
-export default router
+export default mainRouter
