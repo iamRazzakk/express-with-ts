@@ -18,6 +18,7 @@ export type student = {
   guardian: Guardian;
   localGuardian: LocalGuardina;
   profileImage?: string;
+  admittionSemister: Types.ObjectId
   // isActive: 'active' | 'blocked';
 };
 export type Guardian = {

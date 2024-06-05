@@ -8,6 +8,7 @@ import {
     student,
     userName,
 } from './Student.interface';
+import { string } from 'zod';
 const userNameSchema = new Schema<userName>({
     firstName: {
         type: String,
@@ -139,6 +140,7 @@ const studentSchema = new Schema<student>({
         required: true
     },
     profileImage: { type: String },
+    admittionSemister: { type: Schema.Types.ObjectId, ref: "AcademicSemister" },
     // isActive: {
     //     type: String,
     //     enum: ['active', 'blocked'],
