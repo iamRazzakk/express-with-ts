@@ -1,20 +1,23 @@
-import { studentModel } from './Student.model';
-import { student } from './Student.interface';
+import { StudentModel } from '../student.model';
+import { Student } from './student.interface';
 
-// const createStudentIntoDB = async (Student: student) => {
-//   const result = await studentModel.create(Student);
-//   return result;
-// };
-const getAllStudent = async () => {
-  const result = await studentModel.find();
+const createStudentIntoDB = async (student: Student) => {
+  const result = await StudentModel.create(student);
   return result;
 };
-const getOneStudent = async (id: string) => {
-  const result = await studentModel.findOne({ id });
+
+const getAllStudentsFromDB = async () => {
+  const result = await StudentModel.find();
   return result;
 };
-export const StudentService = {
-  // createStudentIntoDB,
-  getAllStudent,
-  getOneStudent,
+
+const getSingleStudentFromDB = async (id: string) => {
+  const result = await StudentModel.findOne({ id });
+  return result;
+};
+
+export const StudentServices = {
+  createStudentIntoDB,
+  getAllStudentsFromDB,
+  getSingleStudentFromDB,
 };
