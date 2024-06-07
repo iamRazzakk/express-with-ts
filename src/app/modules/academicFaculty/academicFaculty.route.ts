@@ -8,7 +8,11 @@ router.post('/create-academic-faculty', validateRequest(AcademicFacultyValidatio
 // get single one faclty id
 
 router.get('/:facultyID', AcademicFacultyController.getSingleAcademicFacultie)
+
+
 // get all faclty i mean strund
 router.get("/", AcademicFacultyController.getAllAcademicFaculties)
+
+
 router.patch('/:facultyID', validateRequest(AcademicFacultyValidation.updateAcademicFacultyValidationSchema), AcademicFacultyController.updateAcademicFacultie)
 export const AcademicFacultyRoutes = router;
