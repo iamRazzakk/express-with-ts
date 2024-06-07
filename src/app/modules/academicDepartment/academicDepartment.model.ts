@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+import { Schema, model } from "mongoose";
 import { TAcademicDepartment } from "./academicDepeartment.interface";
 
 
@@ -7,6 +7,4 @@ const academicDepartmentSchema = new Schema<TAcademicDepartment>({
     academicFaculty: { type: Schema.ObjectId, ref: "AcademicFaculty" }
 
 })
-export const academicDepartment = {
-    academicDepartmentSchema
-}
+export const AcademicDepartment = model<TAcademicDepartment>("AcademicDepartment", academicDepartmentSchema)
