@@ -3,6 +3,7 @@ import { Student } from './student.model';
 import AppError from '../../AppError/AppError';
 import { User } from '../user/user.model';
 import httpStatus from 'http-status';
+import { TStudent } from './student.interface';
 
 const getAllStudentsFromDB = async () => {
   const result = await Student.find().populate("admissionSemester").populate({
@@ -23,8 +24,8 @@ const getSingleStudentFromDB = async (id: string) => {
   });
   return result;
 };
-const UpdateStudentFromDB = async (id: string) => {
-  const result = await Student.findOne({ id })
+const UpdateStudentFromDB = async (id: string, payload: Partial<TStudent>) => {
+  const result = await Student.findOneAndUpdate({ id }, payload)
   return result
 }
 
