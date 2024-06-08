@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import config from '../../config';
 import { TStudent } from '../student/student.interface';
 import { Student } from '../student/student.model';
@@ -5,6 +6,8 @@ import { AcademicSemester } from './../academicSemester/academicSemester.model';
 import { TUser } from './user.interface';
 import { User } from './user.model';
 import { generateStudentId } from './user.utils';
+import AppError from '../../AppError/AppError';
+import httpStatus from 'http-status';
 
 const createStudentIntoDB = async (password: string, payload: TStudent) => {
   // create a user object
@@ -21,21 +24,41 @@ const createStudentIntoDB = async (password: string, payload: TStudent) => {
     payload.admissionSemester,
   );
 
-  //set  generated id
-  userData.id = await generateStudentId(admissionSemester);
+  const session = await mongoose.startSession()
 
-  // create a user
-  const newUser = await User.create(userData);
+  try {
+    session.startTransaction();
 
-  //create a student
-  if (Object.keys(newUser).length) {
-    // set id , _id as user
-    payload.id = newUser.id;
-    payload.user = newUser._id; //reference _id
+    //set generated id (transaction-1)
+    userData.id = await generateStudentId(admissionSemester);
 
-    const newStudent = await Student.create(payload);
+    // create a user
+    const newUser = await User.create([userData], { session });
+
+    // Check if user creation failed
+    if (!newUser.length) {
+      throw new AppError(httpStatus.BAD_REQUEST, "Failed to create user");
+    }
+
+    // Set id, _id as user
+    payload.id = newUser[0].id;
+    payload.user = newUser[0]._id; //reference _id
+    const newStudent = await Student.create([payload], { session });
+
+    // Check if student creation failed
+    if (!newStudent.length) {
+      throw new AppError(httpStatus.BAD_REQUEST, "Failed to create student");
+    }
+
+    // Commit the transaction if everything goes well
+    await session.commitTransaction();
+    await session.endSession()
     return newStudent;
+  } catch (error) {
+    console.log(error)
   }
+
+
 };
 
 export const UserServices = {
