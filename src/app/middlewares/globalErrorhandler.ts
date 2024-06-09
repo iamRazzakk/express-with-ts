@@ -28,7 +28,6 @@ const globalErrorHandler: ErrorRequestHandler = (
       // const path = issue.path.length - 1;
       // return path
     })
-
     const statusCode = 400
     return {
       statusCode,
