@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose";
 import { TAcademicDepartment } from "./academicDepeartment.interface";
-import AppError from "../../AppError/AppError";
+import AppError from "../../Error/AppError";
 import httpStatus from "http-status";
 
 
