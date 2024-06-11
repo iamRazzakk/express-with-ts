@@ -61,7 +61,6 @@ const getAllStudentsFromDB = async (
   let field = "-__v"
   if (query.field) {
     field = (query.field as string).split(",").join(" ")
-    console.log(field)
   }
 
   const fieldQuery = await limitQuery.select(field)
