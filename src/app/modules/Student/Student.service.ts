@@ -23,7 +23,7 @@ const getAllStudentsFromDB = async (
   });
 
   // filtering
-  const excludesFields = ["searchTerm", "sort", "limit"];
+  const excludesFields = ["searchTerm", "sort", "limit", "page", "field"];
   excludesFields.forEach(el => delete queryObj[el]);
 
   const filterQuery = searchQuery.find(queryObj)
@@ -41,14 +41,32 @@ const getAllStudentsFromDB = async (
   }
 
   const sortQuery = filterQuery.sort(sort);
+  let page = 1;
   let limit = 1;
+  let skip = 0;
+
   if (query.limit) {
-    limit = parseInt(query.limit as string, 10);
+    limit = Number(query.limit);
   }
 
-  const limitQuery = sortQuery.limit(limit);
 
-  return await limitQuery;
+  if (query.page) {
+    page = Number(query.page)
+    skip = (page - 1) * limit
+  }
+  const paginamteQuery = sortQuery.skip(skip)
+
+  const limitQuery = paginamteQuery.limit(limit);
+
+  let field = "-__v"
+  if (query.field) {
+    field = (query.field as string).split(",").join(" ")
+    console.log(field)
+  }
+
+  const fieldQuery = await limitQuery.select(field)
+
+  return await fieldQuery;
 };
 
 const getSingleStudentFromDB = async (id: string) => {
