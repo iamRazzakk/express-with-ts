@@ -4,29 +4,33 @@ import AppError from '../../Error/AppError';
 import { User } from '../user/user.model';
 import httpStatus from 'http-status';
 import { TStudent } from './student.interface';
-import { string } from 'zod';
 
 const getAllStudentsFromDB = async (
   query: Record<string, unknown>
 ) => {
   // {email: {}}
+
+
+  const studentSerchableField = ['email', "name.firstName", "presentAddress"]
   let searchTerm = "";
   if (query?.searchTerm) {
     searchTerm = query?.searchTerm as string;
   }
 
-
-
-  const result = await Student.find({
-    $or: ['email', "name.firstName", "presentAddress"].map((field) => ({
+  const searchQuery = Student.find({
+    $or: studentSerchableField?.map((field) => ({
       [field]: { $regex: searchTerm, $option: 'i' }
     }))
-  }).populate("admissionSemester").populate({
-    path: "academicDepartment",
-    populate: {
-      path: "academicFaculty"
-    }
-  });
+  })
+
+  const result = await searchQuery
+    .populate("admissionSemester")
+    .populate({
+      path: "academicDepartment",
+      populate: {
+        path: "academicFaculty"
+      }
+    });
   return result;
 };
 
