@@ -1,18 +1,28 @@
-import express from 'express'
+import express from 'express';
 import validateRequest from '../../middlewares/validateRequest';
+import { AcademicFacultyControllers } from './academicFaculty.controller';
 import { AcademicFacultyValidation } from './academicFaculty.validation';
-import { AcademicFacultyController } from './academicFaculty.controller';
+
 const router = express.Router();
-// create academic faculty
-router.post('/create-academic-faculty', validateRequest(AcademicFacultyValidation.createAcademicFacultyValidationSchema), AcademicFacultyController.createAcademicFaculty)
-// get single one faclty id
 
-router.get('/:facultyID', AcademicFacultyController.getSingleAcademicFacultie)
+router.post(
+  '/create-academic-faculty',
+  validateRequest(
+    AcademicFacultyValidation.createAcademicFacultyValidationSchema,
+  ),
+  AcademicFacultyControllers.createAcademicFaculty,
+);
 
+router.get('/:id', AcademicFacultyControllers.getSingleAcademicFaculty);
 
-// get all faclty i mean strund
-router.get("/", AcademicFacultyController.getAllAcademicFaculties)
+router.patch(
+  '/:id',
+  validateRequest(
+    AcademicFacultyValidation.updateAcademicFacultyValidationSchema,
+  ),
+  AcademicFacultyControllers.updateAcademicFaculty,
+);
 
+router.get('/', AcademicFacultyControllers.getAllAcademicFaculties);
 
-router.patch('/:facultyID', validateRequest(AcademicFacultyValidation.updateAcademicFacultyValidationSchema), AcademicFacultyController.updateAcademicFacultie)
 export const AcademicFacultyRoutes = router;
