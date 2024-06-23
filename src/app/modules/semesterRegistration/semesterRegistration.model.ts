@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import { TSemesterRegistration } from "./semesterRegistration.interface";
 import { SemesterRegistrationStatus } from "./semesterRegistration.constance";
 
@@ -36,4 +36,7 @@ const semesterRegistrationSchema = new Schema<TSemesterRegistration>({
 })
 
 
-export default semesterRegistrationSchema
+export const SemesterRegistration = mongoose.model<TSemesterRegistration>(
+    'SemesterRegistration',
+    semesterRegistrationSchema,
+);
