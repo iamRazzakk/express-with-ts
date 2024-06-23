@@ -35,11 +35,5 @@ const semesterRegistrationSchema = new Schema<TSemesterRegistration>({
     timestamps: true
 })
 
-/**
- * academicSemester: Types.ObjectId
-    status: "UPCOMMING" | "ONGOING" | "ENDED"
-    startDate: Date
-    endDate: Date
-    minCredit: number
-    maxCredit: number*/
+
 export default semesterRegistrationSchema
