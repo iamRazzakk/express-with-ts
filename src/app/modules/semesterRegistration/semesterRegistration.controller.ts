@@ -5,6 +5,7 @@ import httpStatus from "http-status";
 import { semesterRegistrationService } from "./semesterRegistration.service";
 
 const createSemesterRegistration = catchAsync(
+    // "nothing"
     async (req: Request, res: Response) => {
         const result = await semesterRegistrationService.createSemesterRegistrationIntoDB(req.body)
         sendResponse(res, {
@@ -12,9 +13,11 @@ const createSemesterRegistration = catchAsync(
             success: true,
             message: 'Faculty is deleted succesfully',
             data: result,
+
         });
     }
 )
+// 
 export const SemesterRegistrationController = {
     createSemesterRegistration
 }
